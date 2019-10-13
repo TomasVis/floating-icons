@@ -8,7 +8,7 @@ import { useSpring, animated } from 'react-spring'
 
 function Card(props) {
   const [val, set] = useSpring(() => ({ scale: 1, config: { mass: 5, tension: 350, friction: 40 } }))
-  console.log(val)
+  console.log("from card"+val)
 
   useEffect(() => {
     set(props.aProp?{ scale: 1.1 }:{ scale: 1 })

@@ -109,6 +109,7 @@ img{
   transition: box-shadow 0.5s;
   will-change: transform;
   border: 15px solid white;
+margin: 30px;
 }
 
 .card:hover {

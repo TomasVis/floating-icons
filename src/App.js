@@ -21,9 +21,9 @@ class App extends React.Component {
       id:null,
       isOnHover:false,
       dimentions:{},
-      startPos:[[0,0,0.5],[110,400,0.5],[1400,100,0.5],[1200,800,0.5]],
-      cardInFocus: "",
-      dimensions1:""
+      startPos:[[0,0,0.5],[110,400,0.5],[1100,100,0.5],[1200,800,0.5]],
+      cardInFocus: 0,
+      dimensions1:{}
     };
     this.handleMouseEnter = this.handleMouseEnter.bind(this);
     this.handleMouseLeave = this.handleMouseLeave.bind(this);
@@ -39,70 +39,76 @@ class App extends React.Component {
   }
   handleMouseLeave(e){
 
-    this.setState({isOnHover:!this.state.isOnHover,cardInFocus:""})
+    this.setState({isOnHover:!this.state.isOnHover,cardInFocus:0})
   }
 
   handleResize() {
-    if (this.firstCardReff.current) {
-      const getBoundingClientRect = (element) => { const {top, right, bottom, left, width, height, x, y} = element.getBoundingClientRect();
-      return {top, right, bottom, left, width, height, x, y} }
-
+    const getBoundingClientRect = (element) => { const {top, right, bottom, left, width, height, x, y} = element.getBoundingClientRect();
+    return {top, right, bottom, left, width, height, x, y} }
+    if (this.firstCardReff.current) {      
       const dimentions =  getBoundingClientRect(this.firstCardReff.current);
       this.setState({
         dimentions:dimentions
-      })
-  
-  
+      })    
+    }
+    if (this.secondCardReff.current) {      
+      const dimentions =  getBoundingClientRect(this.secondCardReff.current);
+      this.setState({
+        dimentions1:dimentions
+      })    
     }
   }
 
   componentDidMount() {
-       if (this.firstCardReff.current) {
-      const getBoundingClientRect = (element) => { const {top, right, bottom, left, width, height, x, y} = element.getBoundingClientRect();
-      return {top, right, bottom, left, width, height, x, y} }
-
+    const getBoundingClientRect = (element) => { const {top, right, bottom, left, width, height, x, y} = element.getBoundingClientRect();
+    return {top, right, bottom, left, width, height, x, y} }
+if (this.firstCardReff.current) {      
       const dimentions =  getBoundingClientRect(this.firstCardReff.current);
       this.setState({
         dimentions:dimentions
-      })
-  
-  
-  }
+      })    
+    }
+    if (this.secondCardReff.current) {      
+      const dimentions =  getBoundingClientRect(this.secondCardReff.current);
+      this.setState({
+        dimentions1:dimentions
+      })    
+    }
     window.addEventListener('resize', this.handleResize)
   }
 
   render() {
 
 
-//console.log(this.state.dimentions);
+//console.log(this.state);
 console.log(this.state.cardInFocus);
     return (
       <div>
 
         <div 
-          id="firstCard" 
+          id={1} 
           className="wrapper"
           ref={this.firstCardReff}                      
           onMouseEnter={this.handleMouseEnter} 
           onMouseLeave={this.handleMouseLeave}          
         >
-          <Card aProp = {this.state.isOnHover} />            
+          <Card id={1}  cardInFocus={this.state.cardInFocus} aProp = {this.state.isOnHover} />            
         </div>
 
         <div 
-          id="secondCard" 
+          id={2} 
           className="wrapper"
           ref={this.secondCardReff}                      
           onMouseEnter={this.handleMouseEnter} 
           onMouseLeave={this.handleMouseLeave}          
         >
-          <Card aProp = {this.state.isOnHover} />            
+          <Card id={2}  cardInFocus={this.state.cardInFocus} aProp = {this.state.isOnHover} />            
         </div>
        
-        <Comp1 startPos={this.state.startPos[0]} dimentions={this.state.dimentions}  aProp = {this.state.isOnHover} delay = {100}/>
-        <Comp1 startPos={this.state.startPos[1]} dimentions={this.state.dimentions}  aProp = {this.state.isOnHover}  delay = {200}/>
-        <Comp1 startPos={this.state.startPos[2]} dimentions={this.state.dimentions}  aProp = {this.state.isOnHover}  delay = {300}/>
-        <Comp1 startPos={this.state.startPos[3]} dimentions={this.state.dimentions}  aProp = {this.state.isOnHover}  delay = {400}/>
+        <Comp1 startPos={this.state.startPos[0]} dimentions={this.state.dimentions} cardInFocus={this.state.cardInFocus}  aProp = {this.state.isOnHover} delay = {100}/>
+        <Comp1 startPos={this.state.startPos[1]} dimentions={this.state.dimentions} cardInFocus={this.state.cardInFocus}  aProp = {this.state.isOnHover}  delay = {200}/>
+        <Comp1 startPos={this.state.startPos[2]} dimentions={this.state.dimentions1} cardInFocus={this.state.cardInFocus} aProp = {this.state.isOnHover}  delay = {300}/>
+        <Comp1 startPos={this.state.startPos[3]} dimentions={this.state.dimentions1} cardInFocus={this.state.cardInFocus} aProp = {this.state.isOnHover}  delay = {400}/>
         
       </div>
     );

@@ -8,10 +8,11 @@ import { useSpring, animated } from 'react-spring'
 
 function Card(props) {
   const [val, set] = useSpring(() => ({ scale: 1, config: { mass: 5, tension: 350, friction: 40 } }))
-  console.log("from card"+val)
+  console.log("from card "+ props.id+" "+  props.cardInFocus)
+  console.log(props.id==props.cardInFocus)
 
   useEffect(() => {
-    set(props.aProp?{ scale: 1.1 }:{ scale: 1 })
+    set(props.aProp&&props.id==props.cardInFocus?{ scale: 1.1 }:{ scale: 1 })
     //console.log('count changed', props.aProp);
 
 

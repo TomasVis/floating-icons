@@ -23,7 +23,7 @@ function Comp1(props) {
 useEffect(() => {
   setTimeout(() => set(props.aProp?{xyo: [props.destination.x,props.destination.y,1]}:{xyo: props.startPos}), props.delay)
    // set(props.aProp?{xyo: [props.dimentions.x,props.dimentions.y,1]}:{xyo: [0,0,0.01]})
-    console.log('count changed', props.someVal);
+   // console.log('count changed', props.someVal);
 
 
 }, [props.aProp])

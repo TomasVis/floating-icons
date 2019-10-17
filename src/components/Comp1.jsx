@@ -7,6 +7,13 @@ import { useSpring, animated, config } from 'react-spring'
 
 const trans = (x, y, o) =>{ return ` translate(${x}px,${y}px)`}
 const transOp = (x, y, o) =>{ return `${o}`}
+const icons = [
+"http://pluspng.com/img-png/logo-mongodb-png-mongodb-logo-anything-but-the-simplest-of-web-applications-requires-a-database-to-store-and-serve-content-from-choosing-the-right-database-and-structuring-413.png",
+"https://d2eip9sf3oo6c2.cloudfront.net/tags/images/000/000/026/full/react.png",
+"https://cdn.worldvectorlogo.com/logos/nodejs-icon.svg",
+"https://cdn.worldvectorlogo.com/logos/html5.svg"
+
+]
 
 
 function Comp1(props) {
@@ -14,21 +21,18 @@ function Comp1(props) {
   const [val, set ] = useSpring(() => ({ xyo: props.startPos,config: { mass: 5, tension: 250, friction: 80} }))
 //console.log(val)
 useEffect(() => {
-  setTimeout(() => set(props.aProp?{xyo: [props.dimentions.x,props.dimentions.y,1]}:{xyo: props.startPos}), props.delay)
+  setTimeout(() => set(props.aProp?{xyo: [props.destination.x,props.destination.y,1]}:{xyo: props.startPos}), props.delay)
    // set(props.aProp?{xyo: [props.dimentions.x,props.dimentions.y,1]}:{xyo: [0,0,0.01]})
-    //console.log('count changed', props.aProp);
+    console.log('count changed', props.someVal);
 
 
 }, [props.aProp])
   return (
     <div className="icons"  >
       <animated.div
-         style={{ transform: val.xyo.interpolate(trans),opacity: val.xyo.interpolate(transOp)}}
-
-
-        >
+         style={{ transform: val.xyo.interpolate(trans),opacity: val.xyo.interpolate(transOp)}}>
         
-        <img src="https://mpng.pngfly.com/20190111/thz/kisspng-mongodb-logo-database-nosql-postgresql-how-to-create-an-outstanding-tech-stack-clickup-bl-5c391bdf9cff48.4731136215472465596431.jpg"/>
+        <img src={icons[props.iconNr]}/>
 
       </animated.div>
     </div>

@@ -29,11 +29,12 @@ class App extends React.Component {
       secondCardDimentions:{},
       thirdCardDimentions:{}
     };
-    this.handleMouseEnter = this.handleMouseEnter.bind(this);
-    this.handleMouseLeave = this.handleMouseLeave.bind(this);
+
     this.handleResize = this.handleResize.bind(this);
     this.getIconPositions = this.getIconPositions.bind(this);
     this.getBoundingClientRect = this.getBoundingClientRect.bind(this);
+    this.handleMouseOver = this.handleMouseOver.bind(this);
+    this.handleMouseOut = this.handleMouseOut.bind(this);
 
     this.firstCardReff = React.createRef();
     this.secondCardReff = React.createRef();
@@ -41,14 +42,15 @@ class App extends React.Component {
     const someVal = 10;
   }
 
-  handleMouseEnter(e){
+  handleMouseOver(e){
    // console.log( e.currentTarget.id)
-    this.setState({isOnHover:!this.state.isOnHover,cardInFocus:e.currentTarget.id})
-  }
-  handleMouseLeave(e){
+    this.setState({isOnHover:true,cardInFocus:e.currentTarget.id})
+  } 
+   handleMouseOut(e){
 
-    this.setState({isOnHover:!this.state.isOnHover,cardInFocus:0})
-  }
+    this.setState({isOnHover:false,cardInFocus:0})
+  } 
+
   getIconPositions(posOnCard){
     console.log(posOnCard)
     //determines to which location cards should flow based on which card is in focus
@@ -75,7 +77,7 @@ class App extends React.Component {
   handleResize() {  
       this.setState({
         firstCardDimentions:this.getBoundingClientRect(this.firstCardReff.current),
-        secondCardDimentions:this.getBoundingClientRect(this.secondCardReff.current),
+       secondCardDimentions:this.getBoundingClientRect(this.secondCardReff.current),
         thirdCardDimentions:this.getBoundingClientRect(this.thirdCardReff.current)
       })    
   }
@@ -83,7 +85,7 @@ class App extends React.Component {
   componentDidMount() {
       this.setState({
         firstCardDimentions:this.getBoundingClientRect(this.firstCardReff.current),
-        secondCardDimentions:this.getBoundingClientRect(this.secondCardReff.current),
+       secondCardDimentions:this.getBoundingClientRect(this.secondCardReff.current),
          thirdCardDimentions:this.getBoundingClientRect(this.thirdCardReff.current)
       }) 
     window.addEventListener('resize', this.handleResize)
@@ -103,32 +105,34 @@ console.log(this.state.thirdCardDimentions);*/
         <div 
           id={1} 
           className="wrapper"
-          ref={this.firstCardReff}                      
-          onMouseEnter={this.handleMouseEnter} 
-          onMouseLeave={this.handleMouseLeave}          
+          ref={this.firstCardReff}                           
+          onMouseOver={this.handleMouseOver}          
+          onMouseOut={this.handleMouseOut}          
         >
           <Card id={1}  cardInFocus={this.state.cardInFocus} aProp = {this.state.isOnHover} />            
         </div>
 
-        <div 
+       <div 
           id={2} 
           className="wrapper"
-          ref={this.secondCardReff}                      
-          onMouseEnter={this.handleMouseEnter} 
-          onMouseLeave={this.handleMouseLeave}          
+          ref={this.secondCardReff}                           
+          onMouseOver={this.handleMouseOver}          
+          onMouseOut={this.handleMouseOut}          
         >
           <Card id={2}  cardInFocus={this.state.cardInFocus} aProp = {this.state.isOnHover} />            
-        </div> 
-
+        </div>
+        
+        
         <div 
           id={3} 
           className="wrapper"
-          ref={this.thirdCardReff}                      
-          onMouseEnter={this.handleMouseEnter} 
-          onMouseLeave={this.handleMouseLeave}          
+          ref={this.thirdCardReff}                           
+          onMouseOver={this.handleMouseOver}          
+          onMouseOut={this.handleMouseOut}          
         >
           <Card id={3}  cardInFocus={this.state.cardInFocus} aProp = {this.state.isOnHover} />            
         </div>
+
        
         <Comp1 iconNr= {0} startPos={this.state.startPos[0]} destination={this.getIconPositions(1)} cardInFocus={this.state.cardInFocus}  aProp = {this.state.isOnHover} delay = {100}/>
         <Comp1 iconNr= {1} startPos={this.state.startPos[1]} destination={this.getIconPositions(2)} cardInFocus={this.state.cardInFocus}  aProp = {this.state.isOnHover} delay = {200}/>

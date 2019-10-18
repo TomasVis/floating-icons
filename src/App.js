@@ -7,11 +7,7 @@ import Comp1 from './components/Comp1';
 import Card from './components/Card';
 
 
-//TODO
-//Handle multiple cards
-//Make icons fly from dynamic positions
-//determine which cards need to fly and which dont
-//Make cards fly to dynamic positions
+
 
 
 class App extends React.Component {
@@ -40,7 +36,7 @@ class App extends React.Component {
     this.firstCardReff = React.createRef();
     this.secondCardReff = React.createRef();
     this.thirdCardReff = React.createRef();
-    const someVal = 10;
+
   }
 
   handleMouseOver(e){
@@ -54,42 +50,40 @@ class App extends React.Component {
 
   getIconPositions(cardThatCalledThis){
     //console.log(cardThatCalledThis)
-    //determines to which location cards should flow based on which card is in focus
-    let ret = this.state.cardInFocus==0 ? this.state.firstCardDimentions:
+    
+    let ret = this.state.cardInFocus==0 ? this.state.firstCardDimentions:   //determines to which location cards should flow based on which card is in focus
               this.state.cardInFocus==1 ? this.state.secondCardDimentions:
               this.state.cardInFocus==2 ? this.state.thirdCardDimentions:
               {x:0,y:0} 
 
-  // lets say card in focus nr 2 has  state exp [1,3,4]
-let inc =0;
+    let arr = this.state.cardInFocus==0 ? [0,1,2,3]:                        // arr represents array that controlls wheather the icon should go to the card, or stay in its initial position
+              this.state.cardInFocus==1 ? [0,2,3]:                          // each number in array represents the icon which needs to know where to go
+              this.state.cardInFocus==2 ? [0,1,3]:
+              [0,1,2,3]
+
+
+let inc =0;                                                                 // this value will be incremented and added to the x value to align icons
 let answ= {};
-console.log(this.state.cardInFocus)
-let arr = [[0,1,2,3],[1,3],[1,4]];
+//console.log(this.state.cardInFocus)
+//let arr = [[0,1,2,3],[1,3],[1,4]];
 
-if(!arr[0].includes(cardThatCalledThis)){
- // console.log("not includes "+cardThatCalledThis)
-}
-else{
-
-arr[0].forEach(x =>{
-
- answ = cardThatCalledThis == x ? ret = {...ret,x:ret.x+inc} : ret;
- inc+=50;
-return answ
-})
+//console.log("cardThatCalledThis "+cardThatCalledThis)
+if(!arr.includes(cardThatCalledThis)){                                      // if icon number is not in the array the icon gets destination of its initial position
+  //console.log("not includes "+cardThatCalledThis)
+  let x = this.state.startPos[cardThatCalledThis][0]
+  let y = this.state.startPos[cardThatCalledThis][1]
+   answ = ret = {x:x,y:y} 
 
 }
+else{                                                                        // adds arbitrary number to x axis for individual icon alignment
+  arr.forEach(x =>{
+    answ = cardThatCalledThis == x ? ret = {...ret,x:ret.x+inc} : ret;
+    inc+=50;
+    return answ
+  })
 
+}
 
-
-    // adds arbitrary number to x axis for individual icon alignment
-/*    let ans = cardThatCalledThis == 2 ? ret = {...ret,x:ret.x+50}:
-              cardThatCalledThis == 3 ? ret = {...ret,x:ret.x+100}:
-              cardThatCalledThis == 4 ? ret = {...ret,x:ret.x+150}:
-              ret*/
-
-              
-              //console.log(ret)
    return answ
 
   }
@@ -124,7 +118,7 @@ console.log(this.state.firstCardDimentions);
 console.log(this.state.secondCardDimentions);
 console.log(this.state.thirdCardDimentions);*/
     return (
-      <div>
+      <div className="mainContainer">
 
         <div 
           id={0} 
@@ -155,6 +149,24 @@ console.log(this.state.thirdCardDimentions);*/
           onMouseOut={this.handleMouseOut}          
         >
           <Card id={2}  cardInFocus={this.state.cardInFocus} aProp = {this.state.isOnHover} />            
+        </div>
+        <div 
+          id={3} 
+          className="wrapper"
+          ref={this.thirdCardReff}                           
+          onMouseOver={this.handleMouseOver}          
+          onMouseOut={this.handleMouseOut}          
+        >
+          <Card id={3}  cardInFocus={this.state.cardInFocus} aProp = {this.state.isOnHover} />            
+        </div>
+        <div 
+          id={4} 
+          className="wrapper"
+          ref={this.thirdCardReff}                           
+          onMouseOver={this.handleMouseOver}          
+          onMouseOut={this.handleMouseOut}          
+        >
+          <Card id={4}  cardInFocus={this.state.cardInFocus} aProp = {this.state.isOnHover} />            
         </div>
 
        

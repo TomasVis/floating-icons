@@ -18,10 +18,10 @@ const icons = [
 
 function Comp1(props) {
 
-  const [val, set ] = useSpring(() => ({ xyo: props.startPos,config: { mass: 5, tension: 250, friction: 80} }))
-//console.log(val)
+  const [val, set ] = useSpring(() => ({ xyo: [props.startPos.x,props.startPos.y,0.5],config: { mass: 5, tension: 250, friction: 80} }))
+//console.log(props.startPos)
 useEffect(() => {
-  setTimeout(() => set(props.aProp?{xyo: [props.destination.x,props.destination.y,1]}:{xyo: props.startPos}), props.delay)
+  setTimeout(() => set(props.aProp?{xyo: [props.destination.x,props.destination.y,1]}:{xyo: [props.startPos.x,props.startPos.y,0.5]}), props.delay)
    // set(props.aProp?{xyo: [props.dimentions.x,props.dimentions.y,1]}:{xyo: [0,0,0.01]})
    // console.log('count changed', props.someVal);
 

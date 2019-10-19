@@ -1,4 +1,4 @@
-/** { background-color: rgba(255,0,0,.2); }
+* { background-color: rgba(255,0,0,.2); }
 * * { background-color: rgba(0,255,0,.2); }
 * * * { background-color: rgba(0,0,255,.2); }
 * * * * { background-color: rgba(255,0,255,.2); }
@@ -6,16 +6,8 @@
 * * * * * * { background-color: rgba(255,255,0,.2); }
 * * * * * * * { background-color: rgba(255,0,0,.2); }
 * * * * * * * * { background-color: rgba(0,255,0,.2); }
-* * * * * * * * * { background-color: rgba(0,0,255,.2); }*/
-html,
-body,
-/*#root {
-  width: 100%;
-  height: 100%;
-  margin: 0;
-  padding: 0;
-  background-color: white;
-}*/
+* * * * * * * * * { background-color: rgba(0,0,255,.2); }
+
 
 body {
   font-family: -apple-system, BlinkMacSystemFont, avenir next, avenir, helvetica neue, helvetica, ubuntu,
@@ -29,88 +21,49 @@ body {
   user-select: none;
   cursor: default;
 }
-
-#root {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
-  background: #f0f0f0;
-}
-.App {
-  text-align: center;
+.filler{
+  height:1300px;
 }
 
-.App-logo {
-  height: 40vmin;
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #09d3ac;
-}
 .icons{
   position:absolute;
   top:0;
   left:0;
   pointer-events: none; 
-/*  z-index: -50;*/
+
 }
 img{
-  width: 50px;
-  height: 50px;
+  width: 25px;
+  height: 25px;
    display: block; 
 }
-.withHover{
+/*.withHover{
   
   position: relative;
   margin: 50px;
 
 }
 
-.withHover {
-  width: 45ch;
-  height: 45ch;
-  background: grey;
-  border-radius: 5px;
-  background-image: url("http://placekitten.com/200/200");
-  background-size: cover;
-  background-position: center center;
-  box-shadow: 0px 10px 30px -5px rgba(0, 0, 0, 0.3);
-  transition: box-shadow 0.2s;
-  will-change: transform;
-  border: 15px solid white;
-}
-
 .withHover:hover {
   box-shadow: 0px 30px 100px -10px rgba(0, 0, 0, 0.4);
-}
+}*/
 
 
 .card {
-  width: 25ch;
+  width: 50ch;
   height: 25ch;
   background: grey;
   border-radius: 5px;
-  background-image: url(http://placekitten.com/400/400);
+/*  background-image: url(http://placekitten.com/400/400);*/
+  background-image: url(https://www.elsetge.cat/myimg/f/62-626106_ideas-background-for-business-card-blank-visiting-card.jpg);
   background-size: cover;
   background-position: center center;
   box-shadow: 0px 10px 30px -5px rgba(0, 0, 0, 0.3);
   transition: box-shadow 0.5s;
   will-change: transform;
-  border: 15px solid white;
-margin: 30px;
-}
+/*  border: 15px solid white;*/
+  margin: 30px;
+  }
 
 .card:hover {
   box-shadow: 0px 30px 100px -10px rgba(0, 0, 0, 0.4);
@@ -123,7 +76,10 @@ Comp1{
   z-index: 10;
 }
 .mainContainer{
+  position: relative;
   display:flex;
-  width: 100%;
-  height: 100%;
+  flex-wrap: wrap;
+  justify-content: space-around;
+/*  width: 100%;
+  height: 100%;*/
 }

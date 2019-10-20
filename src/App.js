@@ -1,5 +1,7 @@
 //TODO
 //make start positions relative to viewport
+//change icon and name in browser tab not to be react default
+// in git hub change description
 
 
 import React, { Component } from 'react';
@@ -9,6 +11,7 @@ import './App.css';
 import { Spring  } from 'react-spring/renderprops';
 import Comp1 from './components/Comp1';
 import Card from './components/Card';
+import Visibility from './components/Visibility';
 
 
 
@@ -21,7 +24,7 @@ class App extends React.Component {
     this.state = {
       id:null,
       isOnHover:false,
-      startPos:[[80,100],[110,400],[80,400],[300,200]],
+      startPos:[[80,100],[110,400],[180,400],[300,200],[180,200],[280,400],[180,80],[280,500],[180,600],[280,600],[80,40],[800,400],],
       cardInFocus: -1,
       firstCardDimentions:{},
       secondCardDimentions:{},
@@ -40,7 +43,7 @@ class App extends React.Component {
     this.getIconPositions = this.getIconPositions.bind(this);
 /*    this.getBoundingClientRect = this.getBoundingClientRect.bind(this);
 */    this.handleMouseOver = this.handleMouseOver.bind(this);
-    this.handleMouseOut = this.handleMouseOut.bind(this);
+    this.handleMouseLeave = this.handleMouseLeave.bind(this);
     this.getIconStartPos = this.getIconStartPos.bind(this);
 
     this.firstCardReff = React.createRef();
@@ -68,12 +71,19 @@ return {x:x,y:y}
    // console.log( e.currentTarget.id)
     this.setState({isOnHover:true,cardInFocus:e.currentTarget.id})
   } 
-   handleMouseOut(e){
+   handleMouseLeave(e){
 
     this.setState({isOnHover:false,cardInFocus:-1})
   } 
 
-  getIconPositions(cardNr){
+  getIconPositions(iconNum){
+//has to be different arrays for different number of slots for each card
+    const slotsForIcons = [
+
+    [{x:300,y:40},{x:280,y:94},{x:272,y:150},{x:280,y:203},{x:310,y:203},{x:310,y:250}],
+    [{x:300,y:40},{x:280,y:94},{x:272,y:150},{x:280,y:203}],
+    [{x:300,y:40},{x:280,y:94},{x:280,y:94}]
+    ];// array with values to add to original card position, placing each icon to its slot
 
     const { cardInFocus, startPos } = this.state;
     const { width, height } = this.state.mainContainerDimentions;
@@ -83,28 +93,36 @@ return {x:x,y:y}
               cardInFocus==2 ? this.state.thirdCardDimentions:
               {x:0,y:0} 
 
-    let arr = cardInFocus==0 ? [0,1,2,3]:                        // arr represents array that controlls wheather the icon should go to the card, or stay in its initial position
+    let arr = cardInFocus==0 ? [0,1,2,3,4,5]:                        // arr represents array that controlls wheather the icon should go to the card, or stay in its initial position
               cardInFocus==1 ? [2,3]:                          // each number in array represents the icon which needs to know where to go
               cardInFocus==2 ? [0,1,3]:
               [0,1,2,3]
 
-
+let index=0;
 let inc =0;                                                                 // this value will be incremented and added to the x value to align icons
 let answ= {};
 //console.log(this.state.cardInFocus)
 //let arr = [[0,1,2,3],[1,3],[1,4]];
 
-//console.log("cardNr "+cardNr)
-if(!arr.includes(cardNr)){                                      // if icon number is not in the array the icon gets destination of its initial position
-  //console.log("not includes "+cardNr)
-    let x = startPos[cardNr][0] >= 0 ?  startPos[cardNr][0] :  width + startPos[cardNr][0] ;
-    let y = startPos[cardNr][1] >= 0 ? startPos[cardNr][1] : height + startPos[cardNr][1] ;
+//console.log("iconNum "+iconNum)
+if(!arr.includes(iconNum)){                                      // if icon number is not in the array the icon gets destination of its initial position
+  //console.log("not includes "+iconNum)
+    let x = startPos[iconNum][0] >= 0 ?  startPos[iconNum][0] :  width + startPos[iconNum][0] ;
+    let y = startPos[iconNum][1] >= 0 ? startPos[iconNum][1] : height + startPos[iconNum][1] ;
    answ = val = {x:x,y:y} 
 
 }
 else{                                                                        // adds arbitrary number to x axis for individual icon alignment
-  arr.forEach(x =>{
-    answ = cardNr == x ? val = {...val,x:val.x+inc} : val;
+  arr.forEach(el =>{
+    if(iconNum == el){
+      //console.log(slotsForIcons[index])
+      //console.log("val "+val+" "+" slotsForIcons[index][iconNum] "+slotsForIcons[index])
+    }
+    //answ = iconNum == x ? val = {...val,x:val.x+inc} : val;
+    answ = iconNum == el ? val = {x:val.x+slotsForIcons[cardInFocus!=-1?cardInFocus:0][index].x ,
+     y:val.y+slotsForIcons[cardInFocus!=-1?cardInFocus:0][index].y,o:1} : val;
+    //answ =  {x:val.x+slotsForIcons[iconNum][index].x , y:val.y+slotsForIcons[iconNum][index].y};
+    index++;
     inc+=50;
     return answ
   })
@@ -153,16 +171,36 @@ console.log(this.firstCardReff.current.offsetTop);*/
   }
   render() {
 
-//console.log(this.state.firstIconStartPos)
-console.log(this.state.secondCardDimentions);
-console.log(this.state.mainContainerDimentions);
+console.log(this.state.isOnHover)
+//console.log(this.state.secondCardDimentions);
+//console.log(this.state.mainContainerDimentions);
 /*console.log(this.state.dimentions);
 
 
 console.log(this.state.thirdCardDimentions);*/
     return (<div>
       <div className="filler"> asdasd</div>
+      <Visibility src='http://placekitten.com/200/300'/>
        <div className="filler"> asdasd</div>
+{/*       <svg width="120" height="120">
+  <a href="#">
+    <path d="M   0   0
+             L 120   0
+             L 120 120
+             L  60  80
+             L   0 120
+             Z"
+          fill="#007BFF"/>
+  
+   <text x="60"
+          y="50"
+          fill="#FFFFFF"
+          text-anchor="middle"
+          alignment-baseline="middle">
+      I'm a link.
+    </text>
+  </a>
+</svg>*/}
 {/*       <div className="filler"> asdasd</div>*/}
 
       <div ref={this.mainContainerReff} className="mainContainer">
@@ -172,7 +210,7 @@ console.log(this.state.thirdCardDimentions);*/
           className="wrapper"
           ref={this.firstCardReff}                           
           onMouseOver={this.handleMouseOver}          
-          onMouseOut={this.handleMouseOut}          
+          onMouseLeave={this.handleMouseLeave}          
         >
           <Card id={0}  cardInFocus={this.state.cardInFocus} aProp = {this.state.isOnHover} />            
         </div>
@@ -182,7 +220,7 @@ console.log(this.state.thirdCardDimentions);*/
           className="wrapper"
           ref={this.secondCardReff}                           
           onMouseOver={this.handleMouseOver}          
-          onMouseOut={this.handleMouseOut}          
+          onMouseLeave={this.handleMouseLeave}          
         >
           <Card id={1}  cardInFocus={this.state.cardInFocus} aProp = {this.state.isOnHover} />            
         </div>
@@ -193,16 +231,25 @@ console.log(this.state.thirdCardDimentions);*/
           className="wrapper"
           ref={this.thirdCardReff}                           
           onMouseOver={this.handleMouseOver}          
-          onMouseOut={this.handleMouseOut}          
+          onMouseLeave={this.handleMouseLeave}          
         >
-          <Card id={2}  cardInFocus={this.state.cardInFocus} aProp = {this.state.isOnHover} />            
+          <Card   id={2}  cardInFocus={this.state.cardInFocus} aProp = {this.state.isOnHover} /> 
+          
+                
         </div>
-{/*        <Comp1 iconNr= {0} startPos={this.getIconStartPos(0)} destination={this.getIconPositions(0)} cardInFocus={this.state.cardInFocus}  aProp = {this.state.isOnHover} delay = {100}/>
-*/}
-        <Comp1 iconNr= {0} startPos={this.getIconStartPos(0)} destination={this.getIconPositions(0)} cardInFocus={this.state.cardInFocus}  aProp = {this.state.isOnHover} delay = {100}/>
+
+       <Comp1 iconNr= {0} startPos={this.getIconStartPos(0)} destination={this.getIconPositions(0)} cardInFocus={this.state.cardInFocus}  aProp = {this.state.isOnHover} delay = {100}/>
        <Comp1 iconNr= {1} startPos={this.getIconStartPos(1)} destination={this.getIconPositions(1)} cardInFocus={this.state.cardInFocus}  aProp = {this.state.isOnHover} delay = {200}/>
         <Comp1 iconNr= {2} startPos={this.getIconStartPos(2)} destination={this.getIconPositions(2)} cardInFocus={this.state.cardInFocus}  aProp = {this.state.isOnHover} delay = {300}/>
         <Comp1 iconNr= {3} startPos={this.getIconStartPos(3)} destination={this.getIconPositions(3)} cardInFocus={this.state.cardInFocus}  aProp = {this.state.isOnHover} delay = {400}/>
+        <Comp1 iconNr= {4} startPos={this.getIconStartPos(4)} destination={this.getIconPositions(4)} cardInFocus={this.state.cardInFocus}  aProp = {this.state.isOnHover} delay = {400}/>
+        <Comp1 iconNr= {5} startPos={this.getIconStartPos(5)} destination={this.getIconPositions(5)} cardInFocus={this.state.cardInFocus}  aProp = {this.state.isOnHover} delay = {400}/>
+        <Comp1 iconNr= {6} startPos={this.getIconStartPos(6)} destination={this.getIconPositions(6)} cardInFocus={this.state.cardInFocus}  aProp = {this.state.isOnHover} delay = {400}/>
+        <Comp1 iconNr= {7} startPos={this.getIconStartPos(7)} destination={this.getIconPositions(7)} cardInFocus={this.state.cardInFocus}  aProp = {this.state.isOnHover} delay = {400}/>
+        <Comp1 iconNr= {8} startPos={this.getIconStartPos(8)} destination={this.getIconPositions(8)} cardInFocus={this.state.cardInFocus}  aProp = {this.state.isOnHover} delay = {400}/>
+        <Comp1 iconNr= {9} startPos={this.getIconStartPos(9)} destination={this.getIconPositions(9)} cardInFocus={this.state.cardInFocus}  aProp = {this.state.isOnHover} delay = {400}/>
+        <Comp1 iconNr= {10} startPos={this.getIconStartPos(10)} destination={this.getIconPositions(10)} cardInFocus={this.state.cardInFocus}  aProp = {this.state.isOnHover} delay = {400}/>
+        <Comp1 iconNr= {11} startPos={this.getIconStartPos(11)} destination={this.getIconPositions(11)} cardInFocus={this.state.cardInFocus}  aProp = {this.state.isOnHover} delay = {400}/>
 
 
 
